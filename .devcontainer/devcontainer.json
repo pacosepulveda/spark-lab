@@ -1,30 +1,35 @@
 {
-  "name": "Apache Spark Course",
+  "name": "Apache Spark Cluster (curso)",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "spark-driver",
+  "workspaceFolder": "/workspace",
 
-  "dockerComposeFile": "docker-compose.yml",
+  // VS Code opera como root dentro del driver para poder escribir en /workspace
+  // y ejecutar el kernel de Jupyter sin problemas de permisos.
+  "remoteUser": "root",
+  "overrideCommand": false,
 
-  "service": "jupyter",
-
-  "workspaceFolder": "/home/jovyan/work",
-
-  "shutdownAction": "stopCompose",
-
-  "forwardPorts": [
-    8888,
-    8080
-  ],
+  // Puertos que se auto-reenvían en Codespaces (clic para abrir en el navegador).
+  "forwardPorts": [8080, 8081, 8082, 4040],
+  "portsAttributes": {
+    "8080": { "label": "Spark Master UI", "onAutoForward": "notify" },
+    "8081": { "label": "Spark Worker 1 UI", "onAutoForward": "silent" },
+    "8082": { "label": "Spark Worker 2 UI", "onAutoForward": "silent" },
+    "4040": { "label": "Spark App UI (job en curso)", "onAutoForward": "silent" }
+  },
 
   "customizations": {
-
     "vscode": {
-
       "extensions": [
-
         "ms-python.python",
-
         "ms-toolsai.jupyter"
-
-      ]
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/bin/python3"
+      }
     }
-  }
+  },
+
+  // Mensaje de bienvenida al abrir el Codespace.
+  "postAttachCommand": "echo '✅ Clúster Spark listo. Abre notebooks/00_verificar_cluster.ipynb y ejecuta las celdas.'"
 }

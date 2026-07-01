@@ -1,0 +1,17 @@
+# NO incluir pyspark aquí: ya viene en la imagen oficial de Spark.
+# Instalar pyspark por pip provocaría conflictos de versión.
+
+# Núcleo científico (necesario también en los executors para pandas/Arrow UDFs)
+numpy
+pandas
+pyarrow
+
+# Machine learning y visualización (driver)
+scikit-learn
+matplotlib
+seaborn
+
+# Entorno de notebooks
+jupyter
+ipykernel
+findspark
