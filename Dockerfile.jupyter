@@ -1,0 +1,16 @@
+FROM jupyter/pyspark-notebook:spark-3.5.0
+
+USER root
+
+# Librerías adicionales para ML / procesamiento de datos
+RUN pip install --no-cache-dir \
+    scikit-learn \
+    pandas \
+    matplotlib \
+    seaborn \
+    pyarrow \
+    mlflow
+
+USER jovyan
+
+WORKDIR /home/jovyan
