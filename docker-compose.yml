@@ -1,6 +1,12 @@
 # Clúster Apache Spark standalone: 1 master + 2 workers + 1 driver (notebooks).
 # Todos los servicios comparten la MISMA imagen (spark-lab) => Spark y Python
 # idénticos en driver y executors (evita el clásico error de versión de Python).
+#
+# IMPORTANTE: los CUATRO servicios llevan "build: ." con el mismo "image:".
+# Así Docker construye la imagen una vez y el resto la reutiliza de caché.
+# Si solo un servicio tuviera "build:", Codespaces intentaría DESCARGAR
+# spark-lab:latest de Docker Hub (no existe) y la creación fallaría
+# -> VS Code arrancaría en "modo recuperación" con /workspace vacío.
 
 services:
   spark-master:
@@ -8,8 +14,6 @@ services:
     image: spark-lab:latest
     container_name: spark-master
     hostname: spark-master
-    # Ejecutamos la clase del master en primer plano (foreground) para que el
-    # ciclo de vida del contenedor dependa del proceso.
     entrypoint: ["/opt/spark/bin/spark-class"]
     command: ["org.apache.spark.deploy.master.Master", "--host", "spark-master"]
     ports:
@@ -19,6 +23,7 @@ services:
       - spark-net
 
   spark-worker-1:
+    build: .
     image: spark-lab:latest
     container_name: spark-worker-1
     hostname: spark-worker-1
@@ -38,6 +43,7 @@ services:
       - spark-net
 
   spark-worker-2:
+    build: .
     image: spark-lab:latest
     container_name: spark-worker-2
     hostname: spark-worker-2
@@ -58,6 +64,7 @@ services:
 
   # Contenedor al que se conecta VS Code. Aquí corren los notebooks (= driver Spark).
   spark-driver:
+    build: .
     image: spark-lab:latest
     container_name: spark-driver
     hostname: spark-driver
@@ -79,3 +86,4 @@ services:
 networks:
   spark-net:
     driver: bridge
+
