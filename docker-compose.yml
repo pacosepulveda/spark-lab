@@ -14,6 +14,7 @@ services:
     image: spark-lab:latest
     container_name: spark-master
     hostname: spark-master
+    user: "root"          # escribir en el /workspace compartido (bind mount propiedad de root)
     entrypoint: ["/opt/spark/bin/spark-class"]
     command: ["org.apache.spark.deploy.master.Master", "--host", "spark-master"]
     ports:
@@ -27,6 +28,7 @@ services:
     image: spark-lab:latest
     container_name: spark-worker-1
     hostname: spark-worker-1
+    user: "root"          # escribir en el /workspace compartido (bind mount propiedad de root)
     depends_on:
       - spark-master
     entrypoint: ["/opt/spark/bin/spark-class"]
@@ -51,6 +53,7 @@ services:
     image: spark-lab:latest
     container_name: spark-worker-2
     hostname: spark-worker-2
+    user: "root"          # escribir en el /workspace compartido (bind mount propiedad de root)
     depends_on:
       - spark-master
     entrypoint: ["/opt/spark/bin/spark-class"]
@@ -94,4 +97,3 @@ services:
 networks:
   spark-net:
     driver: bridge
-
