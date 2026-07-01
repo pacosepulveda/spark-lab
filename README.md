@@ -1,16 +1,16 @@
 # Clúster Apache Spark en GitHub Codespaces
 
-Clúster **Spark standalone** (1 master + 2 workers) que cada alumno arranca en su
+Clúster **Spark standalone** (1 master + 2 workers) que puedes arrancar en tu
 propio **Codespace**, sin instalar nada, para ejecutar algoritmos, procesar datos
 y entrenar modelos de ML en notebooks Jupyter.
 
-- **Coste:** ~0 € — cada alumno usa su cuenta gratuita de GitHub.
+- **Coste:** ~0 € — cuenta gratuita de GitHub y uso de free tier de CodeSpaces
 - **Arranque:** un clic → clúster + notebooks en ~2-3 min.
 - **Clúster real** (master + workers), no `local[*]`.
 
 ---
 
-## Para el alumno
+## Instrucciones
 
 1. Entra en el repositorio del curso en GitHub.
 2. Botón verde **`< > Code`** → pestaña **Codespaces** → **Create codespace on main**.
@@ -40,15 +40,14 @@ Cuando termines, **para el Codespace** para no consumir horas:
 ├── Dockerfile                # Imagen común (Spark oficial + librerías Python)
 ├── requirements.txt          # numpy, pandas, scikit-learn, jupyter, ...
 ├── notebooks/
-│   ├── 00_verificar_cluster.ipynb
-│   └── 01_ml_spark.ipynb
-├── data/                     # Datos del alumno (vacío por defecto)
+│   └── 00_verificar_cluster.ipynb
+├── data/                     # Para subir datasets (vacío por defecto)
 └── README.md
 ```
 
 ---
 
-## Cómo funciona (para el instructor)
+## Cómo funciona
 
 - **Imagen base:** imagen **oficial de Apache Spark** (`spark:3.5.8-...-python3`),
   que ya incluye PySpark. **No** se usa `bitnami/spark`: desde ago–sep 2025 esas
@@ -79,7 +78,7 @@ Cuando termines, **para el Codespace** para no consumir horas:
 
 ### Datos del curso
 
-Deja datasets en `data/` (o que los alumnos los suban ahí). Están disponibles en
+Deja datasets en `data/`. Están disponibles en
 `/workspace/data` dentro del contenedor. Para datasets grandes/compartidos, es mejor
 que los notebooks los descarguen de una URL en la primera celda.
 
