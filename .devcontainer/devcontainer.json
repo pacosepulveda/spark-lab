@@ -1,33 +1,30 @@
 {
-  "name": "Spark Cluster Lab",
-  "dockerComposeFile": "../docker-compose.yml",
+  "name": "Apache Spark Course",
+
+  "dockerComposeFile": "docker-compose.yml",
+
   "service": "jupyter",
-  "workspaceFolder": "/home/jovyan",
 
-  "remoteUser": "jovyan",
+  "workspaceFolder": "/home/jovyan/work",
 
-  // CRÍTICO: sin esto, Codespaces sobreescribe el "command:" del compose
-  // (start-notebook.sh) con un "sleep infinity" y el servidor Jupyter
-  // nunca llega a arrancar dentro del contenedor.
-  "overrideCommand": false,
+  "shutdownAction": "stopCompose",
 
-  "forwardPorts": [8888, 8080, 4040],
-  "portsAttributes": {
-    "8888": {
-      "label": "Jupyter Notebook",
-      "onAutoForward": "openBrowser",
-      "requireLocalPort": false
-    },
-    "8080": {
-      "label": "Spark Master UI",
-      "onAutoForward": "notify"
-    },
-    "4040": {
-      "label": "Spark Job UI",
-      "onAutoForward": "notify"
+  "forwardPorts": [
+    8888,
+    8080
+  ],
+
+  "customizations": {
+
+    "vscode": {
+
+      "extensions": [
+
+        "ms-python.python",
+
+        "ms-toolsai.jupyter"
+
+      ]
     }
-  },
-
-  "waitFor": "postStartCommand",
-  "postStartCommand": "until curl -sf http://localhost:8888 > /dev/null; do sleep 2; done; echo 'Cluster Spark listo. Abre el puerto 8888 en el navegador (no el notebook dentro de VS Code).'"
+  }
 }
